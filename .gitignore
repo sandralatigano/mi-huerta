@@ -1,0 +1,11 @@
+# Carpetas de dependencias
+node_modules/
+
+# Archivos del entorno de desarrollo (Windsurf / VS Code)
+.code-workspace
+.vscode/
+.DS_Store
+
+# Archivos de configuración local o temporales
+*.log
+.env

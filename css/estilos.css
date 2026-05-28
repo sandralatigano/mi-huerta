@@ -1,0 +1,216 @@
+/**
+ * Archivo: estilos.css
+ * Descripción: Hoja de estilos principal que define la identidad visual de 'Mi Huerta', incluyendo colores verdes, tipografías y diseño de tarjetas.
+ * Componente: UI / Estilos
+ */
+ 
+/* --- 1. CONFIGURACIÓN GENERAL --- */
+body { 
+    background-color: #f4f7f5; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* CONTENEDOR CON ANCHO LIMITADO PARA QUE NO SE ESTIRE */
+.container { 
+    max-width: 1100px; 
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 2. BARRA DE TÍTULO (Header) --- */
+.header-barra {
+    background-color: #1b4332; 
+    color: #ffffff !important;
+    padding: 20px 0;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.header-barra h3 {
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+/* --- 3. TARJETAS (Cards) --- */
+.card { 
+    border: none; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    background-color: #ffffff; 
+    margin-bottom: 25px;
+}
+
+/* --- 4. GRILLA ELEGANTE (Uniforme) --- */
+.table-container {
+    background: transparent;
+    padding: 0;
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0 10px; 
+}
+
+/* Forzamos que la cabecera sea oscura para que resalten los títulos blancos */
+.table thead th {
+    background-color: #1b4332 !important; /* Verde oscuro igual al header */
+    border: none;
+    padding: 12px 15px !important;
+    font-size: 0.75rem; 
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff !important; /* Texto blanco para los que no son links */
+    vertical-align: middle;
+}
+
+/* Estilo para los enlaces de ordenamiento (Nombre, Variedad, Ubicación) */
+.table thead th a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.table thead th a:hover {
+    color: #d1e7dd !important; /* Un verde clarito al pasar el mouse */
+}
+
+.table tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f9fffb;
+    transform: translateY(-2px);
+}
+
+.table tbody td {
+    border: none;
+    padding: 16px 15px !important;
+    vertical-align: middle;
+    font-size: 0.9rem; 
+    color: #444;
+}
+
+.table td:first-child { border-radius: 12px 0 0 12px; }
+.table td:last-child { border-radius: 0 12px 12px 0; }
+/* --- 5. COMPONENTES --- */
+.badge-tipo {
+    background-color: #f1f8f5;
+    color: #2d6a4f;
+    border: 1px solid #d8eadd;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+.pagination .page-link { 
+    color: #2d6a4f; 
+    border: none;
+    margin: 0 3px; 
+    border-radius: 8px;
+    background-color: white;
+}
+
+.pagination .page-item.active .page-link { 
+    background-color: #2d6a4f !important; 
+    color: white !important; 
+}
+
+/* --- 6. BOTONES (CENTRADO GARANTIZADO) --- */
+.btn-seguimiento { 
+    border-radius: 8px; 
+    font-weight: 600; 
+    font-size: 0.85rem;
+    transition: 0.3s;
+    padding: 8px 16px;
+    display: inline-flex;
+    justify-content: center; 
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.btn-anadir-planta { 
+    background-color: #2d6a4f !important; 
+    color: #ffffff !important; 
+    border: none;
+    width: 100%; 
+    display: flex; 
+    justify-content: center; /* Centra el texto en el botón ancho */
+}
+
+.btn-guardar-registro {
+    background-color: #0d6efd !important; 
+    color: #ffffff !important; 
+    border: none !important;
+    padding: 12px !important;
+    width: 100%; 
+    display: flex; 
+    justify-content: center;
+}
+
+/* Estilos para el pie de página */
+.footer-huerta {
+    background-color: #2d6a4f; /* El verde oscuro de nuestra barra */
+    color: white;
+    border-top: 3px solid #1b4332;
+}
+
+/* Personalización de los scrolls en las tarjetas */
+div::-webkit-scrollbar {
+    width: 6px;
+}
+div::-webkit-scrollbar-thumb {
+    background: #2d6a4f;
+    border-radius: 10px;
+}
+div::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Espaciado para que el contenido no quede pegado al footer */
+.main-content {
+    min-height: calc(100vh - 160px);
+}
+/* Fuerza el color blanco en los títulos y flechas de ordenamiento de la tabla */
+.table thead th a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table thead th a:hover {
+    color: #d1e7dd !important; /* Un verde clarito al pasar el mouse */
+}
+
+/* Para los títulos que no son enlaces (como Época/Tipo) */
+.table thead th {
+    color: #ffffff !important;
+    vertical-align: middle;
+}
+
+/* --- Colores del Semáforo de Cosecha --- */
+.text-purple { 
+    color: #8e44ad !important; /* Violeta para plantas pasadas o para semilla */
+}
+
+.text-warning { 
+    color: #f39c12 !important; /* Naranja fuerte para que resalte la cosecha próxima */
+}
+
+.text-info {
+    color: #0dcaf0 !important; /* Azul para plantas recién sembradas */
+}

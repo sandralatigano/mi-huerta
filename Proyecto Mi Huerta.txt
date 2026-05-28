@@ -1,0 +1,34 @@
+Documentación del Proyecto: Sistema "db_huerta"
+1. Propósito del Sistema:
+Aplicación web integral para la gestión de una huerta orgánica, diseñada para automatizar el seguimiento de cultivos, rotación de suelos y previsión de cosechas. El sistema está construido con PHP 8.2, MySQL y Bootstrap 5.3.
+
+2. Arquitectura de Datos (SQL):
+El sistema se basa en una estructura relacional que incluye:
+
+catalogo_plantas: Almacena requerimientos de riego, distancia de siembra y el nuevo campo dias_cosecha_num.
+
+plantas: Registro individual de cada ejemplar con su fecha de siembra y ubicación por bancal.
+
+seguimiento: Historial de acciones (riego, abonado, poda) para cálculos de alertas.
+
+bancales y grupos_rotacion: Organización física y lógica del suelo.
+
+3. Funcionalidades de Usuario (Back-End & Front-End):
+
+Cálculo Automático de Cosecha: El sistema cruza la fecha_siembra con los dias_cosecha_num del catálogo para determinar la fecha probable de recolección.
+
+Dashboard con Barras de Progreso: Interfaz visual que muestra el % de crecimiento de cada cultivo mediante barras dinámicas de Bootstrap, con colores que cambian según la proximidad de la fecha (Celeste/Info -> Amarillo/Warning -> Verde/Success).
+
+Alertas de Riego: Algoritmo que detecta plantas sin riego en las últimas 48 horas comparando la fecha actual con el último registro en la tabla de seguimiento.
+
+4. Módulo de Reportes e Impresión (Actualización Final):
+
+Generador de PDF: Interfaz de informes que permite obtener un estado actual de la huerta.
+
+Estilo Profesional: Implementación de @media print para ocultar elementos de navegación y forzado de color (print-color-adjust: exact) para que las barras de progreso mantengan su significado visual en el papel o archivo digital.
+
+5. Estándares de Programación:
+
+Migración exitosa de funciones antiguas a Sentencias Preparadas (PDO/MySQLi) para prevenir ataques SQL Injection.
+
+Manejo de estados mediante parámetros en la URL para retroalimentación al usuario (banners de éxito/error).

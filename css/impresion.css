@@ -1,0 +1,50 @@
+/**
+ * Archivo: impresion.css
+ * Descripción: Reglas CSS específicas para optimizar la visualización y el formato al imprimir reportes o listados.
+ * Componente: UI / Estilos
+ */
+
+@page {
+    margin: 1cm;
+    size: auto;
+}
+
+@media print {
+    /* Forzar colores de fondo para el encabezado verde y barras */
+    * { 
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important; 
+    }
+
+    /* OCULTAR: Botones, Pie de página de Sandra y elementos web */
+    .d-print-none, 
+    .btn, 
+    footer, 
+    #pie-pagina,
+    .breadcrumb { 
+        display: none !important; 
+    }
+
+    /* MANTENER: El encabezado principal que viene de encabezado_pagina.php */
+    .navbar {
+        display: block !important;
+        background-color: #1a3c34 !important; /* Aseguramos el verde oscuro */
+        border: none !important;
+    }
+
+    /* Ajuste de fuentes y página */
+    body { 
+        background-color: white !important; 
+        font-size: 10pt;
+    }
+
+    .card { 
+        border: 1px solid #dee2e6 !important; 
+        break-inside: avoid;
+    }
+
+    /* Asegurar que las tablas sean compactas */
+    .extra-small {
+        font-size: 0.85rem;
+    }
+}
