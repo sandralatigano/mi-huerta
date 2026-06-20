@@ -86,7 +86,8 @@ include 'encabezado_pagina.php';
         </div>
 
         <div class="col-md-8">
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+            
+            <div class="d-none d-md-block card border-0 shadow-sm rounded-3 overflow-hidden">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead style="background-color: #1a3a2a; color: white;">
@@ -99,7 +100,10 @@ include 'encabezado_pagina.php';
                         </thead>
                         <tbody>
                             <?php if ($historial->num_rows > 0): ?>
-                                <?php while($reg = $historial->fetch_assoc()): ?>
+                                <?php 
+                                $historial->data_seek(0); // Aseguramos que empiece desde el inicio
+                                while($reg = $historial->fetch_assoc()): 
+                                ?>
                                 <tr class="align-middle">
                                     <td class="ps-4 fw-bold text-secondary" style="font-size: 0.85rem;">
                                         <?= date('d/m/Y', strtotime($reg['fecha'])) ?>
@@ -132,9 +136,46 @@ include 'encabezado_pagina.php';
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+
+            <div class="d-block d-md-none">
+                <?php if ($historial->num_rows > 0): ?>
+                    <?php 
+                    $historial->data_seek(0); // Reiniciamos el puntero para generar las tarjetas móviles
+                    while($reg = $historial->fetch_assoc()): 
+                    ?>
+                    <div class="card shadow-sm border-0 rounded-3 mb-3 bg-white">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                                <span class="fw-bold text-dark" style="font-size: 0.9rem;">
+                                    <i class="bi bi-calendar-event text-muted me-1"></i> <?= date('d/m/Y', strtotime($reg['fecha'])) ?>
+                                </span>
+                                <span class="badge bg-light text-success border rounded-pill px-3" style="font-size: 0.7rem;">
+                                    <?= $reg['accion'] ?>
+                                </span>
+                            </div>
+                            
+                            <p class="text-muted small mb-3 text-wrap" style="line-height: 1.4;">
+                                <?= htmlspecialchars($reg['observaciones'] ?: 'Sin observaciones.') ?>
+                            </p>
+
+                            <div class="text-end">
+                                <button onclick="confirmarBorradoSeg(<?= $reg['id'] ?>, <?= $id_planta ?>)" 
+                                        class="btn btn-sm btn-outline-danger px-3 py-1 fw-bold">
+                                    <i class="bi bi-trash3 me-1"></i> Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <div class="text-center py-5 text-muted bg-white rounded-3 shadow-sm">
+                        <i class="bi bi-info-circle d-block mb-2" style="font-size: 1.8rem;"></i>
+                        No hay tareas registradas para esta planta.
+                    </div>
+                <?php endif; ?>
+            </div>
+
+        </div> </div> </div>
 
 <script>
 function confirmarBorradoSeg(id, planta) {

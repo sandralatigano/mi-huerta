@@ -64,7 +64,7 @@ include 'encabezado_pagina.php';
         </div>
     <?php endif; ?>
 
-    <div class="card shadow-sm border-0 rounded-3">
+    <div class="d-none d-md-block card shadow-sm border-0 rounded-3 overflow-hidden">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -81,7 +81,7 @@ include 'encabezado_pagina.php';
                     <tbody class="small">
                         <?php
                         if ($resultado->num_rows > 0) {
-                            // Si hay usuarios, los mostramos
+                            $resultado->data_seek(0); // Reiniciamos puntero para la PC
                             while ($row = $resultado->fetch_assoc()): ?>
                                 <tr>
                                     <td class="ps-4 fw-bold text-muted"><?php echo $row['id']; ?></td>
@@ -124,19 +124,79 @@ include 'encabezado_pagina.php';
                                 </tr>
                             <?php endwhile; 
                         } else { 
-                            // SI LA TABLA ESTÁ VACÍA, mostramos este mensaje que ocupa toda la fila
                             echo "<tr>";
                             echo "<td colspan='6' class='text-center text-muted py-4'>";
                             echo "<i class='bi bi-people me-2'></i> No hay usuarios registrados en el sistema actualmente.";
                             echo "</td>";
                             echo "</tr>";
-                            }
+                        }
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <div class="d-block d-md-none">
+        <?php
+        if ($resultado->num_rows > 0) {
+            $resultado->data_seek(0); // Reiniciamos puntero para el celular
+            while ($row = $resultado->fetch_assoc()): ?>
+                <div class="card shadow-sm border-0 rounded-3 mb-3 bg-white">
+                    <div class="card-body p-3">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                            <span class="fw-bold text-dark" style="font-size: 0.95rem;">
+                                <i class="bi bi-person text-muted me-1"></i> <?php echo htmlspecialchars($row['nombre_real']); ?>
+                            </span>
+                            <span class="badge bg-light text-muted border style="font-size: 0.75rem;">
+                                ID: <?php echo $row['id']; ?>
+                            </span>
+                        </div>
+                        
+                        <div class="mb-2 small">
+                            <span class="text-muted">Usuario:</span>
+                            <span class="badge bg-light text-dark border rounded-pill px-2 ms-1">
+                                <?php echo htmlspecialchars($row['nombre_usuario']); ?>
+                            </span>
+                        </div>
+
+                        <div class="mb-2 small">
+                            <span class="text-muted">Rol asignado:</span>
+                            <span class="badge bg-light text-dark border rounded-pill px-2 ms-1">
+                                <?php echo htmlspecialchars($row['nombre_rol']); ?>
+                            </span>
+                        </div>
+
+                        <div class="mb-3 small text-muted">
+                            <i class="bi bi-calendar3 me-1"></i> Alta: <?php echo date('d/m/Y', strtotime($row['fecha_alta'])); ?>
+                        </div>
+
+                        <div class="d-flex gap-2 border-top pt-2">
+                            <a href="usuarios_editar.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-warning flex-grow-1 text-center py-2 fw-bold">
+                                <i class="bi bi-pencil-square me-1"></i> Editar
+                            </a>
+                            
+                            <?php if ($row['id'] != $_SESSION['usuario_id']): ?>
+                            <button onclick="confirmarBajaUsuario(<?php echo $row['id']; ?>)" class="btn btn-sm btn-outline-danger px-3 py-2">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                            <?php else: ?>
+                            <button class="btn btn-sm btn-outline-secondary disabled px-3 py-2">
+                                <i class="bi bi-person-check"></i>
+                            </button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; 
+        } else { ?>
+            <div class="text-center py-5 text-muted bg-white rounded-3 shadow-sm">
+                <i class="bi bi-people d-block mb-2" style="font-size: 1.8rem;"></i>
+                No hay usuarios registrados en el sistema actualmente.
+            </div>
+        <?php } ?>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

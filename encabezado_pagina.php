@@ -45,7 +45,7 @@
                         </li>
                         <?php endif; ?>
 
-                        <?php if ($mi_rol == 1): ?>
+                        <?php if ($mi_rol == 1 || $mi_rol == 2): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="configuracion.php"><i class="bi bi-gear"></i> Configuración</a>
                         </li>

@@ -64,7 +64,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #ffffff !important; /* Texto blanco para los que no son links */
+    color: #ffffff !important;
     vertical-align: middle;
 }
 
@@ -103,6 +103,7 @@ body {
 
 .table td:first-child { border-radius: 12px 0 0 12px; }
 .table td:last-child { border-radius: 0 12px 12px 0; }
+
 /* --- 5. COMPONENTES --- */
 .badge-tipo {
     background-color: #f1f8f5;
@@ -127,6 +128,13 @@ body {
     color: white !important; 
 }
 
+/* --- SUGERENCIAS Y ENLACES --- */
+.sugerencia-box { 
+    font-size: 0.75rem; 
+    line-height: 1.1; 
+    color: #155724; 
+}
+
 /* --- 6. BOTONES (CENTRADO GARANTIZADO) --- */
 .btn-seguimiento { 
     border-radius: 8px; 
@@ -147,7 +155,7 @@ body {
     border: none;
     width: 100%; 
     display: flex; 
-    justify-content: center; /* Centra el texto en el botón ancho */
+    justify-content: center; 
 }
 
 .btn-guardar-registro {
@@ -162,7 +170,7 @@ body {
 
 /* Estilos para el pie de página */
 .footer-huerta {
-    background-color: #2d6a4f; /* El verde oscuro de nuestra barra */
+    background-color: #2d6a4f; 
     color: white;
     border-top: 3px solid #1b4332;
 }
@@ -183,34 +191,16 @@ div::-webkit-scrollbar-track {
 .main-content {
     min-height: calc(100vh - 160px);
 }
-/* Fuerza el color blanco en los títulos y flechas de ordenamiento de la tabla */
-.table thead th a {
-    color: #ffffff !important;
-    text-decoration: none !important;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.table thead th a:hover {
-    color: #d1e7dd !important; /* Un verde clarito al pasar el mouse */
-}
-
-/* Para los títulos que no son enlaces (como Época/Tipo) */
-.table thead th {
-    color: #ffffff !important;
-    vertical-align: middle;
-}
 
 /* --- Colores del Semáforo de Cosecha --- */
 .text-purple { 
-    color: #8e44ad !important; /* Violeta para plantas pasadas o para semilla */
+    color: #8e44ad !important; 
 }
 
 .text-warning { 
-    color: #f39c12 !important; /* Naranja fuerte para que resalte la cosecha próxima */
+    color: #f39c12 !important; 
 }
 
 .text-info {
-    color: #0dcaf0 !important; /* Azul para plantas recién sembradas */
+    color: #0dcaf0 !important; 
 }

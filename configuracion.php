@@ -129,53 +129,90 @@ $res_gr_opt = $conexion->query("SELECT * FROM grupos_rotacion ORDER BY nombre_gr
 
     <div class="card p-3 shadow-sm border-0 mb-4 rounded-3">
         <h5 class="fw-bold text-secondary border-bottom pb-2 mb-3">Plantas en Catálogo</h5>
-        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-            <table class="table table-hover table-sm align-middle mt-2">
-                <thead class="table-dark small">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Época</th>
-                        <th>Siembra</th>
-                        <th>Tipo Cultivo</th> 
-                        <th>Grupo Rotación</th> 
-                        <th>Riego</th>
-                        <th>Cosecha</th>
-                        <th>Dist.</th>
-                        <th class="text-center">Acción</th>
-                    </tr>
-                </thead>
-                <tbody class="small">
-                    <?php 
-                    $res_cat = $conexion->query("SELECT c.*, e.nombre_epoca, t.nombre_tipo, tc.nombre_tipo as cultivo_tipo, gr.nombre_grupo 
-                                                FROM catalogo_plantas c 
-                                                LEFT JOIN epocas e ON c.id_epoca = e.id 
-                                                LEFT JOIN tipos_siembra t ON c.id_tipo_siembra = t.id 
-                                                LEFT JOIN tipos_cultivo tc ON c.id_tipo_cultivo = tc.id
-                                                LEFT JOIN grupos_rotacion gr ON c.id_grupo_rotacion = gr.id
-                                                ORDER BY c.nombre_comun");
-                    
-                    if($res_cat && $res_cat->num_rows > 0):
-                        while($cat = $res_cat->fetch_assoc()): ?>
+        
+        <?php 
+        // Ejecutamos la consulta original del catálogo maestro
+        $res_cat = $conexion->query("SELECT c.*, e.nombre_epoca, t.nombre_tipo, tc.nombre_tipo as cultivo_tipo, gr.nombre_grupo 
+                                    FROM catalogo_plantas c 
+                                    LEFT JOIN epocas e ON c.id_epoca = e.id 
+                                    LEFT JOIN tipos_siembra t ON c.id_tipo_siembra = t.id 
+                                    LEFT JOIN tipos_cultivo tc ON c.id_tipo_cultivo = tc.id
+                                    LEFT JOIN grupos_rotacion gr ON c.id_grupo_rotacion = gr.id
+                                    ORDER BY c.nombre_comun");
+        ?>
+
+        <div class="d-none d-md-block">
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-hover table-sm align-middle mt-2">
+                    <thead class="table-dark small">
                         <tr>
-                            <td class="fw-bold text-success"><?= $cat['nombre_comun'] ?></td>
-                            <td><?= $cat['nombre_epoca'] ?? '-' ?></td>
-                            <td><?= $cat['nombre_tipo'] ?? '-' ?></td>
-                            <td><span class="badge bg-light text-dark border"><?= $cat['cultivo_tipo'] ?? '-' ?></span></td>
-                            <td><small><?= $cat['nombre_grupo'] ?? '-' ?></small></td>
-                            <td><?= $cat['riego'] ?></td>
-                            <td><?= $cat['tiempo_cosecha'] ?></td>
-                            <td><?= $cat['distancia_sugerida'] ?> cm</td>
-                            <td class="text-center">
-                                <a href="borrar_config.php?tabla=catalogo&id=<?= $cat['id'] ?>&from=<?= $from ?>" 
-                                   class="text-danger btn-eliminar-conf">
-                                     <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
+                            <th>Nombre</th>
+                            <th>Época</th>
+                            <th>Siembra</th>
+                            <th>Tipo Cultivo</th> 
+                            <th>Grupo Rotación</th> 
+                            <th>Riego</th>
+                            <th>Cosecha</th>
+                            <th>Dist.</th>
+                            <th class="text-center">Acción</th>
                         </tr>
-                    <?php endwhile; endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="small">
+                        <?php 
+                        if($res_cat && $res_cat->num_rows > 0):
+                            $res_cat->data_seek(0); // Puntero al inicio para PC
+                            while($cat = $res_cat->fetch_assoc()): ?>
+                            <tr>
+                                <td class="fw-bold text-success"><?= $cat['nombre_comun'] ?></td>
+                                <td><?= $cat['nombre_epoca'] ?? '-' ?></td>
+                                <td><?= $cat['nombre_tipo'] ?? '-' ?></td>
+                                <td><span class="badge bg-light text-dark border"><?= $cat['cultivo_tipo'] ?? '-' ?></span></td>
+                                <td><small><?= $cat['nombre_grupo'] ?? '-' ?></small></td>
+                                <td><?= $cat['riego'] ?></td>
+                                <td><?= $cat['tiempo_harvest'] ?? $cat['tiempo_cosecha'] ?></td>
+                                <td><?= $cat['distancia_sugerida'] ?> cm</td>
+                                <td class="text-center">
+                                    <a href="borrar_config.php?tabla=catalogo&id=<?= $cat['id'] ?>&from=<?= $from ?>" 
+                                       class="text-danger btn-eliminar-conf">
+                                         <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endwhile; endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div class="d-block d-md-none" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
+            <?php 
+            if($res_cat && $res_cat->num_rows > 0):
+                $res_cat->data_seek(0); // Reiniciamos puntero para Móvil
+                while($cat = $res_cat->fetch_assoc()): ?>
+                <div class="card p-3 shadow-sm border rounded-3 mb-2 bg-white" style="font-size: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-2">
+                        <span class="fw-bold text-success" style="font-size: 0.95rem;">
+                            <i class="bi bi-flower1"></i> <?= $cat['nombre_comun'] ?>
+                        </span>
+                        <a href="borrar_config.php?tabla=catalogo&id=<?= $cat['id'] ?>&from=<?= $from ?>" class="text-danger">
+                            <i class="bi bi-trash fs-6"></i>
+                        </a>
+                    </div>
+                    <div class="row g-1 text-muted">
+                        <div class="col-6"><strong>Época:</strong> <?= $cat['nombre_epoca'] ?? '-' ?></div>
+                        <div class="col-6"><strong>Siembra:</strong> <?= $cat['nombre_tipo'] ?? '-' ?></div>
+                        <div class="col-6"><strong>Cultivo:</strong> <?= $cat['cultivo_tipo'] ?? '-' ?></div>
+                        <div class="col-6"><strong>Distancia:</strong> <?= $cat['distancia_sugerida'] ?> cm</div>
+                        <div class="col-12"><strong>Riego:</strong> <?= $cat['riego'] ?></div>
+                        <div class="col-12"><strong>Cosecha:</strong> <?= $cat['tiempo_harvest'] ?? $cat['tiempo_cosecha'] ?></div>
+                        <div class="col-12 small"><i class="bi bi-arrow-repeat text-success"></i> <strong>Rotación:</strong> <?= $cat['nombre_grupo'] ?? '-' ?></div>
+                    </div>
+                </div>
+            <?php endwhile; else: ?>
+                <div class="text-center py-3 text-muted">No hay plantas en el catálogo.</div>
+            <?php endif; ?>
+        </div>
+
     </div>
 
     <div class="row g-4">

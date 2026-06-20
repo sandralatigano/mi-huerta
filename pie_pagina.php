@@ -18,7 +18,7 @@
                     v1.2.0-stable
                 </span>
                 <span class="text-muted" style="font-size: 0.75rem;">
-                    Desarrollado con <i class="bi bi-heart-fill text-danger"></i> por Sandra
+                    Desarrollado por Sandra Latigano
                 </span>
             </div>
 
